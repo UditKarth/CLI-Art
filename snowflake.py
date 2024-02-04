@@ -6,6 +6,7 @@ def draw_line(stdscr, start, end):
     dy = end[1] - start[1]
     dx = end[0] - start[0]
     distance = max(abs(dx), abs(dy))
+    distance = math.ceil(distance)  
     for i in range(distance + 1):
         y = start[1] + i * dy / distance
         x = start[0] + i * dx / distance
@@ -36,9 +37,9 @@ def draw_snowflake(stdscr):
     curses.curs_set(0)  # Hide cursor
     max_y, max_x = stdscr.getmaxyx()
     center = (max_x // 2, max_y // 2)
-    size = min(max_x, max_y) // 3
-    points = []
+    size = min(max_x, max_y) // 2  # Increased initial size
 
+    points = []
     for i in range(3):
         angle = math.pi * 2 / 3 * i
         x = center[0] + size * math.cos(angle)
@@ -46,11 +47,12 @@ def draw_snowflake(stdscr):
         points.append((x, y))
 
     stdscr.clear()
+    depth = 5  
     for i in range(3):
-        koch_curve(stdscr, points[i], points[(i + 1) % 3], 4)  # Adjust depth as needed
+        koch_curve(stdscr, points[i], points[(i + 1) % 3], depth)
 
     stdscr.refresh()
     stdscr.getch()
 
-def create_snowflake():
+def main_snowflake():
     curses.wrapper(draw_snowflake)

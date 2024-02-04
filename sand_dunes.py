@@ -1,9 +1,12 @@
 import curses
 import random
 import time
+import math
 
-def generate_initial_dunes(max_x, max_height=5):
-    return [random.randint(max_height // 2, max_height) for _ in range(max_x)]
+def generate_initial_dunes(max_x, max_height=8, frequency=0.05):
+    """Generates initial dune shapes using a sine wave."""
+    dunes = [int((math.sin(x * frequency) + 1) / 2 * max_height) + max_height // 4 for x in range(max_x)]
+    return dunes
 
 def draw_dunes(stdscr, dunes):
     max_y, max_x = stdscr.getmaxyx()
