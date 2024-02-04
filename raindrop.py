@@ -32,4 +32,5 @@ def draw_rain(stdscr):
         stdscr.refresh()  # Refresh the screen
         time.sleep(0.05)  # Control the animation speed
 
-
+def main_rain():
+    curses.wrapper(draw_rain)
